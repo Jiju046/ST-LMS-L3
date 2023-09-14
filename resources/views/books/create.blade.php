@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.book')
 
 @section('content')
     <div class="container">

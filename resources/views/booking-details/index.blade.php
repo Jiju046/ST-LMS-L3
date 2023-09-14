@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.book')
 
 @section('content')
 <div class="container">
@@ -70,7 +70,6 @@
         data: {
             id: bookingId,
             status: status,
-            _token: '{{ csrf_token() }}'
         },
         success: function (response) {
             if (response.success) {

@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.book')
 
 @section('content')
 <div class="container">
@@ -51,11 +51,14 @@
 <script>
     function loadAvailableBooks() {
         let selectedDate = $('#date').val();
+        let dateParts = selectedDate.split('-');
+        let formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Change the format to 'ddmmyyyy'
+        
 
         $.ajax({
             type: 'POST',
             url: '/get-available-books',
-            data: { date: selectedDate, _token: '{{ csrf_token() }}' },
+            data: { date: selectedDate },
             success: function(response) {
                 $('#availableBooks').empty();
 
@@ -69,7 +72,7 @@
                     $('#availableBooks').html('<p>No available books for this date.</p>');
                 }
 
-                $('#selectedDate').text('Available Books for ' + selectedDate);
+                $('#selectedDate').text('Available Books for ' + formattedDate);
             },
             error: function(error) {
                 console.error(error);
