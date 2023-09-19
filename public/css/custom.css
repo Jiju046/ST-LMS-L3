@@ -60,6 +60,10 @@ th, td {
     color: #fff;
 }
 
+.button-dashboard {
+    background-color: #3D84B8;
+}
+
 .button-red {
     background-color: #DC3545 !important;
     color: #fff;
@@ -102,6 +106,9 @@ th, td {
     margin-bottom: 20px;
     color: black;
 
+}
+.label-weight{
+    font-weight: 600;
 }
 
 /* accept and decline booking-details  */

@@ -14,7 +14,7 @@
 
                         <!-- title -->
                         <div>
-                            {!! Form::label('title', 'Book Title:') !!}
+                            {!! Form::label('title', 'Book Title:', ['class'=>'label-weight']) !!}
                             {!! Form::text('title', null, ['class' => 'text-input']) !!}
                             @error('title')
                                 <div class="alert-error">{{ $message }}</div>
@@ -23,7 +23,7 @@
 
                         <!-- available -->
                         <div>
-                            {!! Form::label('available_days', 'Available Days:') !!}<br>
+                            {!! Form::label('available_days', 'Available Days:', ['class'=>'label-weight']) !!}<br>
                             <label>
                                 {!! Form::checkbox('available_days', 'All', false, ['class' => 'check-all']) !!} All
                             </label><br>

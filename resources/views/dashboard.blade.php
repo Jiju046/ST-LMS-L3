@@ -17,8 +17,8 @@
                     <h3>This is the admin dashboard.</h3>
                     <br>
                     <ul>
-                        <li><a href="{{ route('books.index') }}" class="text-blue-500 hover:text-blue-700 hover:underline btn">Book CRUD operations</a></li>
-                        <li><a href="{{ route('booking-details.index') }}" class="text-blue-500 hover:text-blue-700 hover:underline btn">Booking Details</a></li>
+                        <li><a href="{{ route('books.index') }}" class="text-blue-500 hover:text-blue-700 hover:underline button button-dashboard">Book CRUD operations</a></li>
+                        <li><a href="{{ route('booking-details.index') }}" class="text-blue-500 hover:text-blue-700 hover:underline button button-dashboard">Booking Details</a></li>
                     </ul>
                 @else
                     <!-- Content for Regular User -->
@@ -28,7 +28,7 @@
                     <br>
 
                     <ul>
-                        <li><a href="{{ route('booking.index') }}" class="text-blue-500 hover:text-blue-700 hover:underline btn">Book Library Books</a></li>
+                        <li><a href="{{ route('booking.index') }}" class="text-blue-500 hover:text-blue-700 hover:underline button button-dashboard">Book Library Books</a></li>
                     </ul>
                 @endif
 

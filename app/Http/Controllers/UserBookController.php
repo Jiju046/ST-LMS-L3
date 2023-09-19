@@ -39,9 +39,9 @@ class UserBookController extends Controller
             'date' => 'required|date',
             'selected_books' => 'required|array',
             'selected_books.*' => 'integer',
-        ],[
+        ], [
             'date.required' => 'Please select a date',
-            'selected_books.required' => 'Please select atleast one available book!'
+            'selected_books.required' => 'Please select at least one available book!'
         ]);
 
         if ($validator->fails()) {
@@ -50,17 +50,30 @@ class UserBookController extends Controller
                 ->withInput();
         }
 
-        // Store user's selected books for admin approval
-        $userId = Auth::id();
+        // Check if the selected books are already booked for the chosen date
         $date = $request->input('date');
         $selectedBooks = $request->input('selected_books');
+        $conflictingBooks = UserBook::where('date', $date)
+            ->whereIn('book_id', $selectedBooks)
+            ->where('approved', 1)
+            ->get();
+
+        $bookNames = $conflictingBooks->pluck('book.title')->unique()->implode(', ');
+
+        if (!$conflictingBooks->isEmpty()) {
+            return redirect()->route('booking.index')
+                    ->with('error', ' The following books are already booked:' . $bookNames );
+        }
+
+        // Store user's selected books for admin approval
+        $userId = Auth::id();
 
         foreach ($selectedBooks as $bookId) {
             UserBook::create([
                 'user_id' => $userId,
                 'book_id' => $bookId,
                 'date' => $date,
-                'approved' => null, // Set initial status to not null
+                'approved' => null, // Set initial status to null
             ]);
         }
 
@@ -71,24 +84,37 @@ class UserBookController extends Controller
     // approve
     public function bookingStatus(Request $request)
     {
-        
         $status = $request->input('status'); // Retrieve 'status' from the POST data
         $id = $request->input('id');
         $booking = UserBook::findOrFail($id);
 
+        // Check if the book is already approved for another user on same date
+        $existingApproval = UserBook::where('book_id', $booking->book_id)
+            ->where('approved', true)
+            ->where('date', '=', $booking->date) // Check if the dates are same
+            ->where('id', '!=', $id)
+            ->first();
+
+        if ($existingApproval) { //
+            if($status === "decline"){
+                $booking->approved = false;
+                $booking->save();
+            }
+            // Book is already approved for another user
+            return response()->json(['success' => false]);
+        }
+
         $booking->approved = ($status === 'approve');
         $booking->save();
 
-        $message = $booking->approved ? 'Booking approved.' : 'Booking declined';
-
-        return response()->json(['success' => true, 'message' => $message]);
+        return response()->json(['success' => true]);
     }
 
 
     // booking available books
     public function getAvailableBooks(Request $request)
     {
-        // Get the selected date from the request
+
         $selectedDate = $request->input('date');
         
         // Convert the selected date to a day of the week (e.g., "Sunday")

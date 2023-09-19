@@ -16,7 +16,7 @@
                 
                             <!-- title -->
                             <div>
-                                {!! Form::label('title', 'Book Title:') !!}
+                                {!! Form::label('title', 'Book Title:', ['class'=>'label-weight']) !!}
                                 {!! Form::text('title', $book->title, ['class' => 'text-input']) !!}
                             </div>
                             @error('title')
@@ -25,7 +25,7 @@
                 
                             <!-- available -->
                             <div>
-                                {!! Form::label('available_days', 'Available Days:') !!}<br>
+                                {!! Form::label('available_days', 'Available Days:', ['class'=>'label-weight']) !!}<br>
                                 <label>
                                     {!! Form::checkbox('available_days', 'All', $book->available_days === 'All', ['class' => 'check-all']) !!} All
                                 </label><br>

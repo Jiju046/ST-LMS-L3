@@ -19,11 +19,17 @@
                                             </div>
                                         @endif
 
+                                        @if(session('error'))
+                                            <div class="alert-error">
+                                                {{ session('error') }}
+                                            </div>
+                                        @endif
+
                                         <!-- booking form -->
                                         {!! Form::open(['route' => 'booking.store']) !!}
                                         
                                         <div class="form-group">
-                                            {!! Form::label('date', 'Select Date') !!}
+                                            {!! Form::label('date', 'Select Date', ['class'=>'label-weight']) !!}
                                             {!! Form::date('date', $date, ['class' => 'datepicker','id' => 'date', 'onchange' => 'loadAvailableBooks()', 'min' => now()->toDateString()]) !!}
                                             @error('date')
                                                 <div class="alert-error" role="alert">
