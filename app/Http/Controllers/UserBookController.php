@@ -58,11 +58,11 @@ class UserBookController extends Controller
             ->where('approved', 1)
             ->get();
 
-        $bookNames = $conflictingBooks->pluck('book.title')->unique()->implode(', ');
+        // $bookNames = $conflictingBooks->pluck('book.title')->unique()->implode(', ');
 
         if (!$conflictingBooks->isEmpty()) {
             return redirect()->route('booking.index')
-                    ->with('error', ' The following books are already booked:' . $bookNames );
+                    ->with('error', ' Some of the books are already booked');
         }
 
         // Store user's selected books for admin approval
@@ -92,17 +92,16 @@ class UserBookController extends Controller
         $existingApproval = UserBook::where('book_id', $booking->book_id)
             ->where('approved', true)
             ->where('date', '=', $booking->date) // Check if the dates are same
-            ->where('id', '!=', $id)
-            ->first();
+            ->where('id', '!=', $id) //except this id
+            ->exists();
 
-        if ($existingApproval) { //
-            if($status === "decline"){
+            if ($existingApproval && $status === "decline") {
                 $booking->approved = false;
                 $booking->save();
+            } elseif ($existingApproval) {
+                // Book is already approved for another user
+                return response()->json(['success' => false]);
             }
-            // Book is already approved for another user
-            return response()->json(['success' => false]);
-        }
 
         $booking->approved = ($status === 'approve');
         $booking->save();
@@ -117,7 +116,7 @@ class UserBookController extends Controller
 
         $selectedDate = $request->input('date');
         
-        // Convert the selected date to a day of the week (e.g., "Sunday")
+        // Convert the selected date to a day of the week
         $selectedDay = date('l', strtotime($selectedDate));
 
         // Query the database to retrieve books available on the selected day
