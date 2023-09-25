@@ -9,15 +9,27 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class PasswordController extends Controller
-{
+{   
+
+    /**
+     * show the user's password page.
+     */
+
+     public function edit()
+     {
+        return view('profile.password');
+     }
+
+
     /**
      * Update the user's password.
      */
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validateWithBag('updatePassword', [
+        $validated = $request->validate( [
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
+            'password_confirmation' => ['required'],
         ]);
 
         $request->user()->update([
