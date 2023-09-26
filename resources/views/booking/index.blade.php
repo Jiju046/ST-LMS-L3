@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 @section('title', 'Book a slot')
     
 @section('content')
@@ -45,40 +45,10 @@
             {!! Form::submit('Submit Selections', ['class' => 'btn btn-success']) !!}
             {!! Form::close() !!}
 
+            <div id="my-element" data-route-url="{{ route('booking-details.status') }}"></div>
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-
-<script>
-    function loadAvailableBooks() {
-        let selectedDate = $('#date').val();
-        let dateParts = selectedDate.split('-');
-        let formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Change the format to 'ddmmyyyy'
-        
-        $.ajax({
-            type: 'POST',
-            url: '/get-available-books',
-            data: { date: selectedDate },
-            success: function(response) {
-                $('#availableBooks').empty();
-
-                if (response.length > 0) {
-                    $.each(response, function(index, book) {
-                        let checkbox = $('<input>').attr({ type: 'checkbox', name: 'selected_books[]', value: book.id, class: 'mx-2', id: book.id });
-                        $('#availableBooks').append(checkbox, $('<label>').attr('for', book.id).text(book.title), '<br>');
-                    });
-                } else {
-                    $('#availableBooks').html('<p>No available books for this date.</p>');
-                }
-
-                $('#selectedDate').text('Available Books for ' + formattedDate);
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
-    }
-</script>
+<script src="{{ asset('js/booking.js') }}"></script>
 @endsection

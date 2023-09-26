@@ -16,12 +16,8 @@ class BookController extends Controller
 
     public function create()
     {
-        return view('books.create');
-    }
-
-    public function show(Book $book)
-    {
-        return view('books.show', compact('book'));
+        $book = new Book();
+        return view('books.create', compact('book'));
     }
 
     public function edit(Book $book)

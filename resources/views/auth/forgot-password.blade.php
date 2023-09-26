@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.guest')
 @section('content')
 
 <div class="container">
@@ -20,20 +20,21 @@
                                     <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                         and we'll send you a link to reset your password!</p>
                                 </div>
-                                {!! Form::open(['route' => 'password.email','class' => 'user']) !!}
-                                    {!! csrf_field() !!}
+                                <form method="POST" action="{{ route('password.email') }}" class="user">
+                                    @csrf
                                     
                                     <!-- Email Address -->
                                     <div class="form-group">
-                                        {!! Form::label('email', 'Email') !!}
-                                        {!! Form::email('email', old('email'), ['id' => 'email','class' => 'form-control', 'required' => 'required', 'autofocus' => 'autofocus']) !!}
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" required autofocus>
                                         <!-- Include any error messages here -->
                                     </div>
-
+                                
                                     <div class="flex items-center justify-end mt-4">
-                                        {!! Form::submit('Email Password Reset Link', ['class' => 'btn btn-primary btn-user btn-block']) !!}
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Email Password Reset Link</button>
                                     </div>
-                                {!! Form::close() !!}
+                                </form>
+                                
                                 <hr>
                                 <div class="text-center">
                                     <a class="small" href="{{ route('register') }}">Create an Account!</a>

@@ -1,6 +1,6 @@
 
 
-@extends('layouts.auth')
+@extends('layouts.guest')
 @section('content')
     
     
