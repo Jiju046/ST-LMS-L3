@@ -32,8 +32,7 @@ class BooksDataTable extends DataTable
 
     public function query(Book $model): QueryBuilder
     {
-        return $model->newQuery()
-            ->with('users'); // Eager load the 'users' relationship
+        return $model->newQuery();
     }
 
     public function html()
@@ -52,11 +51,6 @@ class BooksDataTable extends DataTable
             'id',
             'title',
             'available_days',
-            Column::make('users')->title('Users')
-                ->render(function ($book) {
-                    // Customize the display of users
-                    return $book->users->pluck('name')->implode(', ');
-                }),
             Column::make('action')
                 ->exportable(false)
                 ->printable(false)
