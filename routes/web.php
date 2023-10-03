@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserBookController;
 
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Routes accessible by users with the 'Admin' role
     //book
     Route::resource('books', BookController::class);
+    Route::resource('images', ImageController::class);
     
     //booking_details
     Route::get('booking-details', [UserBookController::class, 'bookingDetails'])->name('booking-details.index');

@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use App\DataTables\BooksDataTable;
 
 class BookController extends Controller
 {
     
-    public function index()
+    public function index(BooksDataTable $dataTable)
     {
-        $books = Book::all();
-        return view('books.index', compact('books'));
+        return $dataTable->render('books.index');
     }
 
     public function create()
@@ -23,6 +23,13 @@ class BookController extends Controller
     public function edit(Book $book)
     {
         return view('books.edit', compact('book'));
+    }
+
+    public function show($id)
+    {
+        $book = Book::findOrFail($id);
+
+        return view('books.show', compact('book'));
     }
 
     public function store(Request $request)
@@ -64,9 +71,13 @@ class BookController extends Controller
 
     
 
-    public function destroy(Book $book)
+    public function destroy(Book $book, Request $request)
     {
         $book->delete();
+
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Book deleted successfully']);
+        }
 
         return redirect()->route('books.index')
             ->with('success', 'Book deleted successfully.');

@@ -26,7 +26,12 @@
                                             <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                         </div>
                                         <!-- Session Status -->
-                                        <x-auth-session-status class="mb-4" :status="session('status')" />
+                                        {{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
+                                        @if (session('status'))
+                                            <div class="alert alert-success">
+                                                {{ session('status') }}
+                                            </div>
+                                        @endif
 
                                         {!! Form::open(['route' => 'login']) !!}
                                         {{ csrf_field() }}

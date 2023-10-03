@@ -30,6 +30,11 @@
         <hr class="sidebar-divider">
 
         <li class="nav-item active"><a href="{{ route('booking-details.index') }}" class="nav-link"><i class="bi bi-calendar-date"></i><span>&nbsp; Booking Details</span></a></li>
+
+         <!-- Divider -->
+         <hr class="sidebar-divider">
+        <li class="nav-item active"><a href="{{ route('images.index') }}" class="nav-link"><i class="bi bi-image-fill"></i><span>&nbsp; Image CRUD</span></a></li>
+
     @else
         <li class="nav-item active"><a href="{{ route('booking.index') }}" class="nav-link"><i class="bi bi-calendar-plus"></i><span>&nbsp; Book Library Books</span></a></li>
     @endif

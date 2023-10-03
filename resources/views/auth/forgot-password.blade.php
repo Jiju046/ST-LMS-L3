@@ -20,6 +20,13 @@
                                     <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                         and we'll send you a link to reset your password!</p>
                                 </div>
+
+                                @if (session('status'))
+                                    <div class="alert alert-success">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
+
                                 <form method="POST" action="{{ route('password.email') }}" class="user">
                                     @csrf
                                     
@@ -29,6 +36,11 @@
                                         <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" required autofocus>
                                         <!-- Include any error messages here -->
                                     </div>
+                                    @error('email')
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('email') }}
+                                        </div>
+                                    @enderror
                                 
                                     <div class="flex items-center justify-end mt-4">
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Email Password Reset Link</button>
