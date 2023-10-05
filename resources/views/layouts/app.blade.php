@@ -29,11 +29,13 @@
         }
         .dt-button{
             color: green !important;
-            background-color: blue !important;
             border: 1px solid #B5CB99 !important;
         }
         .book-table_length{
             border: 1px solid grey !important;
+        }
+        ::-webkit-file-upload-button {
+            display: none;
         }
     </style>
     

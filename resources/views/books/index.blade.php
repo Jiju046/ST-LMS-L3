@@ -24,7 +24,7 @@
     {{-- for delete --}}
     <script>
         function deleteBook(button) {
-            var bookId = $(button).data('id');
+            let bookId = $(button).data('id');
     
             if (confirm('Are you sure you want to delete?')) {
                 $.ajax({
@@ -43,7 +43,5 @@
         }
     </script>
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-
-
-      
+   
 @endpush
